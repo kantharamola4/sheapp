@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.shesafe">
 
-    <!-- Permissions -->
+    <!-- 📍 Required Permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -27,16 +27,20 @@
         android:defaultToDeviceProtectedStorage="true"
         android:directBootAware="true">
 
-        <!-- Activity to handle default SMS selection -->
+
+        <!-- 🧭 Main Launcher Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SheSafe">
+
+            <!-- Launcher -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- SMS compatibility (must be inside activity) -->
             <intent-filter>
                 <action android:name="android.intent.action.SENDTO" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -53,19 +57,16 @@
             </intent-filter>
         </activity>
 
-        <!-- Background service (optional) -->
+        <!-- 👤 Profile Screen -->
+        <activity android:name=".ProfileActivity" />
+
+        <!-- 📞 Emergency Contacts Screen -->
+        <activity android:name=".EmergencyContactsActivity" />
+
+        <!-- 🆘 SOS Background Service -->
         <service
             android:name=".PanicService"
             android:exported="false" />
-
-        <!-- Optional: If you plan to receive incoming SMS -->
-<!--        <receiver android:name=".sms.SmsReceiver"-->
-<!--            android:permission="android.permission.BROADCAST_SMS">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
-
     </application>
 
 </manifest>

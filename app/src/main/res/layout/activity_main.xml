@@ -1,34 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainFrame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient">
+    tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/welcomeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SheSafe"
-        android:textColor="@android:color/white"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="80dp" />
+    <!-- 🎥 Video Background -->
+    <VideoView
+        android:id="@+id/videoBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
 
-    <Button
-        android:id="@+id/emergencyBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:text="Send SOS"
-        android:textSize="18sp"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@color/colorAccent"
-        app:layout_constraintTop_toBottomOf="@id/welcomeText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- 🔲 Dim Overlay for better readability -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000" />
+
+    <!-- 📋 Main Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/appTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SheSafe"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="40dp"
+                android:fontFamily="sans-serif-medium" />
+
+            <!-- Reusable style buttons -->
+            <Button
+                android:id="@+id/emergencyBtn"
+                style="@style/GlassButton"
+                android:text="SEND SOS" />
+
+            <Button
+                android:id="@+id/cameraTriggerBtn"
+                style="@style/GlassButton"
+                android:text="TRIGGER SOS VIA CAMERA" />
+
+            <Button
+                android:id="@+id/audioTriggerBtn"
+                style="@style/GlassButton"
+                android:text="TRIGGER SOS VIA AUDIO" />
+
+            <Button
+                android:id="@+id/profileBtn"
+                style="@style/GlassButton"
+                android:text="PROFILE" />
+
+            <Button
+                android:id="@+id/contactsBtn"
+                style="@style/GlassButton"
+                android:text="EMERGENCY CONTACTS" />
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
