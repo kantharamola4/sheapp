@@ -24,10 +24,12 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_CAMERA = 101
     private lateinit var videoView: VideoView
     private lateinit var emergencyBtn: Button
-    private lateinit var cameraTriggerBtn: Button
-    private lateinit var audioTriggerBtn: Button
+    //private lateinit var cameraTriggerBtn: Button
+    //private lateinit var audioTriggerBtn: Button
     private lateinit var profileBtn: Button
     private lateinit var contactsBtn: Button
+    private lateinit var detectEmotionBtn: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +37,11 @@ class MainActivity : AppCompatActivity() {
 
         // Button references (must come first!)
         emergencyBtn = findViewById(R.id.emergencyBtn)
-        cameraTriggerBtn = findViewById(R.id.cameraTriggerBtn)
-        audioTriggerBtn = findViewById(R.id.audioTriggerBtn)
+        //cameraTriggerBtn = findViewById(R.id.cameraTriggerBtn)
+        //audioTriggerBtn = findViewById(R.id.audioTriggerBtn)
         profileBtn = findViewById(R.id.profileBtn)
         contactsBtn = findViewById(R.id.contactsBtn)
+        detectEmotionBtn = findViewById(R.id.detectEmotionBtn)
 
         // Video Background Setup
         videoView = findViewById(R.id.videoBackground)
@@ -60,13 +63,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        cameraTriggerBtn.setOnClickListener {
-            openCameraAndTriggerSOS()
-        }
-
-        audioTriggerBtn.setOnClickListener {
-            Toast.makeText(this, "Audio trigger under development", Toast.LENGTH_SHORT).show()
-        }
+//        cameraTriggerBtn.setOnClickListener {
+//            openCameraAndTriggerSOS()
+//        }
+//
+//        audioTriggerBtn.setOnClickListener {
+//            Toast.makeText(this, "Audio trigger under development", Toast.LENGTH_SHORT).show()
+//        }
 
         profileBtn.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
@@ -75,6 +78,35 @@ class MainActivity : AppCompatActivity() {
         contactsBtn.setOnClickListener {
             startActivity(Intent(this, EmergencyContactsActivity::class.java))
         }
+        detectEmotionBtn.setOnTouchListener { _, event ->
+            when (event.action) {
+                android.view.MotionEvent.ACTION_DOWN -> {
+                    Toast.makeText(this, "Recording started...", Toast.LENGTH_SHORT).show()
+                    AudioRecorder.startRecording(this)
+                    true
+                }
+                android.view.MotionEvent.ACTION_UP -> {
+                    Toast.makeText(this, "Recording stopped. Analyzing emotion...", Toast.LENGTH_SHORT).show()
+                    AudioRecorder.stopRecordingAndAnalyze(this) { emotion ->
+                        Toast.makeText(this, "Detected emotion: $emotion", Toast.LENGTH_LONG).show()
+
+                        if (emotion.equals("fear", ignoreCase = true)) {
+                            Toast.makeText(this, "Fear detected! Sending SOS...", Toast.LENGTH_SHORT).show()
+                            if (checkPermissions()) {
+                                fetchAndSendLocation()
+                            } else {
+                                requestPermissions()
+                            }
+                        }
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
+
+
+
     }
 
     override fun onResume() {
@@ -89,7 +121,7 @@ class MainActivity : AppCompatActivity() {
 
     // Smooth fade-in animation for buttons
     private fun fadeInButtons() {
-        val buttons = listOf(emergencyBtn, cameraTriggerBtn, audioTriggerBtn, profileBtn, contactsBtn)
+        val buttons = listOf(emergencyBtn, profileBtn, contactsBtn)
         val anim = AlphaAnimation(0f, 1f).apply {
             duration = 1200
             fillAfter = true
@@ -135,7 +167,8 @@ class MainActivity : AppCompatActivity() {
             arrayOf(
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.SEND_SMS,
-                Manifest.permission.CAMERA
+                Manifest.permission.CAMERA,
+                Manifest.permission.RECORD_AUDIO
             ),
             REQUEST_LOCATION_PERMISSION
         )

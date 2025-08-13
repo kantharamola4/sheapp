@@ -49,15 +49,6 @@
                 style="@style/GlassButton"
                 android:text="SEND SOS" />
 
-            <Button
-                android:id="@+id/cameraTriggerBtn"
-                style="@style/GlassButton"
-                android:text="TRIGGER SOS VIA CAMERA" />
-
-            <Button
-                android:id="@+id/audioTriggerBtn"
-                style="@style/GlassButton"
-                android:text="TRIGGER SOS VIA AUDIO" />
 
             <Button
                 android:id="@+id/profileBtn"
@@ -68,6 +59,15 @@
                 android:id="@+id/contactsBtn"
                 style="@style/GlassButton"
                 android:text="EMERGENCY CONTACTS" />
+
+            <Button
+                android:id="@+id/detectEmotionBtn"
+                style="@style/GlassButton"
+                android:text="Detect Emotion"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"/>
+
+
 
         </LinearLayout>
     </ScrollView>
