@@ -9,17 +9,23 @@ object CameraCapture {
     private val handler = Handler()
 
     fun startCapturing(context: Context) {
-        capture(Camera.CameraInfo.CAMERA_FACING_BACK)
-        capture(Camera.CameraInfo.CAMERA_FACING_FRONT)
+        capture(context, Camera.CameraInfo.CAMERA_FACING_BACK)
+        capture(context, Camera.CameraInfo.CAMERA_FACING_FRONT)
     }
 
-    private fun capture(cameraId: Int) {
+    private fun capture(context: Context, cameraId: Int) {
         handler.postDelayed(object : Runnable {
             override fun run() {
                 try {
                     val camera = Camera.open(cameraId)
-                    camera.takePicture(null, null, Camera.PictureCallback { _, _ ->
-                        Log.d("Camera", "Captured from camera $cameraId")
+                    camera.takePicture(null, null, Camera.PictureCallback { data, _ ->
+                        try {
+                            val file = java.io.File(context.filesDir, "img_${cameraId}_${System.currentTimeMillis()}.jpg")
+                            java.io.FileOutputStream(file).use { it.write(data) }
+                            Log.d("Camera", "Captured from camera $cameraId: ${file.absolutePath}")
+                        } catch (e: Exception) {
+                            Log.e("Camera", "Save error: ${e.message}")
+                        }
                         camera.release()
                     })
                 } catch (e: Exception) {

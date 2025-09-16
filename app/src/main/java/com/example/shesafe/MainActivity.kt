@@ -78,6 +78,15 @@ class MainActivity : AppCompatActivity() {
         contactsBtn.setOnClickListener {
             startActivity(Intent(this, EmergencyContactsActivity::class.java))
         }
+
+        // Open Settings on long-press of profile for demo
+        profileBtn.setOnLongClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+            true
+        }
+
+        // Start background safety monitoring
+        try { startService(Intent(this, SafetyMonitorService::class.java)) } catch (_: Exception) {}
         detectEmotionBtn.setOnTouchListener { _, event ->
             when (event.action) {
                 android.view.MotionEvent.ACTION_DOWN -> {

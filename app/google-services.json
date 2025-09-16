@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "905352596096",
+    "project_id": "shesafe-36e40",
+    "storage_bucket": "shesafe-36e40.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905352596096:android:cf236d870ea764dd2cb465",
+        "android_client_info": {
+          "package_name": "com.example.shesafe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs-LzWrc0d2GlgrLP9QROC5gI-mgrfNsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905352596096:android:071400737317c6ed2cb465",
+        "android_client_info": {
+          "package_name": "gnits.ac.in.majorproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs-LzWrc0d2GlgrLP9QROC5gI-mgrfNsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
