@@ -1,8 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.shesafe">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Permissions -->
+    <!-- 📍 Required Permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -11,9 +10,14 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -25,18 +29,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SheSafe"
         android:defaultToDeviceProtectedStorage="true"
-        android:directBootAware="true">
+        android:directBootAware="true"
+        android:name=".App">
 
-        <!-- Activity to handle default SMS selection -->
+
+        <!-- 🧭 Main Launcher Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SheSafe">
+
+            <!-- Launcher -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- SMS compatibility (must be inside activity) -->
             <intent-filter>
                 <action android:name="android.intent.action.SENDTO" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -53,19 +62,34 @@
             </intent-filter>
         </activity>
 
-        <!-- Background service (optional) -->
+        <activity android:name=".SettingsActivity" />
+
+        <!-- 👤 Profile Screen -->
+        <activity android:name=".ProfileActivity" />
+
+        <!-- 📞 Emergency Contacts Screen -->
+        <activity android:name=".EmergencyContactsActivity" />
+
+        <!-- 🆘 SOS Background Services -->
         <service
             android:name=".PanicService"
             android:exported="false" />
 
-        <!-- Optional: If you plan to receive incoming SMS -->
-<!--        <receiver android:name=".sms.SmsReceiver"-->
-<!--            android:permission="android.permission.BROADCAST_SMS">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.provider.Telephony.SMS_RECEIVED" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
+        <service
+            android:name=".SafetyMonitorService"
+            android:exported="false"
+            android:foregroundServiceType="microphone|camera|dataSync" />
 
+        <service
+            android:name=".EmergencyUploadService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- Stealth capture activity (no launcher) -->
+        <activity
+            android:name=".StealthCaptureActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SheSafe" />
     </application>
 
 </manifest>
