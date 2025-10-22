@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Main App Theme -->
+    <style name="Theme.SheSafe" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+    </style>
+
+    <!-- 🔥 The Missing Overlays -->
+    <style name="Theme.SheSafe.AppBarOverlay" parent="ThemeOverlay.Material3.ActionBar" />
+    <style name="Theme.SheSafe.PopupOverlay" parent="ThemeOverlay.Material3.Light" />
+
+</resources>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainFrame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- 🎥 Video Background -->
+    <VideoView
+        android:id="@+id/videoBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop" />
+
+    <!-- 🔲 Dim Overlay for better readability -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000" />
+
+    <!-- 📋 Main Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/appTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SheSafe"
+                android:textSize="40sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="40dp"
+                android:fontFamily="sans-serif-medium" />
+
+            <!-- Reusable style buttons -->
+            <Button
+                android:id="@+id/emergencyBtn"
+                style="@style/GlassButton"
+                android:text="SEND SOS" />
+
+
+            <Button
+                android:id="@+id/profileBtn"
+                style="@style/GlassButton"
+                android:text="PROFILE" />
+
+            <Button
+                android:id="@+id/contactsBtn"
+                style="@style/GlassButton"
+                android:text="EMERGENCY CONTACTS" />
+
+            <Button
+                android:id="@+id/detectEmotionBtn"
+                style="@style/GlassButton"
+                android:text="Detect Emotion"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"/>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>
