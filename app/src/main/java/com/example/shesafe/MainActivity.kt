@@ -193,12 +193,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchAndSendLocation() {
+        Toast.makeText(this, "Getting your location...", Toast.LENGTH_SHORT).show()
+        
         LocationHelper.getCurrentLocation(this) { location ->
             if (location != null) {
-                val message = "I need help! My current location is: https://maps.google.com/?q=${location.latitude},${location.longitude}"
+                val message = "🚨 Emergency! I need help! My current location is: https://maps.google.com/?q=${location.latitude},${location.longitude}"
                 sendSMS(message)
+                Toast.makeText(this, "✅ Location sent successfully!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Could not fetch location", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "❌ Could not fetch location. Please check GPS settings.", Toast.LENGTH_LONG).show()
+                // Send SMS without location as fallback
+                val fallbackMessage = "🚨 Emergency! I need help! (Location unavailable - please call me)"
+                sendSMS(fallbackMessage)
             }
         }
     }

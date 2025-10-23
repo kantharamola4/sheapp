@@ -17,7 +17,9 @@ class PanicService : Service() {
                 val message = "🚨 Emergency! Location: https://maps.google.com/?q=${location.latitude},${location.longitude}"
                 sendSMS(message)
             } else {
-                Toast.makeText(this, "❌ Failed to get location", Toast.LENGTH_SHORT).show()
+                // Send SMS without location as fallback
+                val fallbackMessage = "🚨 Emergency! Help needed! (Location unavailable - please call me)"
+                sendSMS(fallbackMessage)
             }
         }
         return START_NOT_STICKY
