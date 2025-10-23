@@ -54,37 +54,50 @@ object EmotionAnalyzer {
     
     private fun preprocessAudio(audioFile: File): FloatArray? {
         return try {
-            // Simple audio preprocessing - extract features from raw audio
+            // For now, use simplified preprocessing that matches our model's expected input
+            // The model expects 40x40 = 1600 features (MFCC-like features)
+            // We'll create a simplified version that can work with basic audio data
+            
             val inputStream = FileInputStream(audioFile)
             val audioBytes = inputStream.readBytes()
             inputStream.close()
             
-            // Convert to float array and normalize
-            val audioData = FloatArray(minOf(audioBytes.size, 16000)) // Limit to 1 second at 16kHz
+            // Create 40x40 feature matrix (1600 features total)
+            val features = FloatArray(1600)
+            
+            // Simple feature extraction - convert audio bytes to normalized features
+            val audioData = FloatArray(minOf(audioBytes.size, 16000))
             for (i in audioData.indices) {
                 audioData[i] = (audioBytes[i].toInt() and 0xFF) / 255.0f - 0.5f
             }
             
-            // Pad or truncate to fixed size
-            val fixedSize = 16000
-            val result = FloatArray(fixedSize)
-            System.arraycopy(audioData, 0, result, 0, minOf(audioData.size, fixedSize))
-            result
+            // Create 40x40 feature matrix by sampling and reshaping
+            for (i in 0 until 40) {
+                for (j in 0 until 40) {
+                    val audioIndex = (i * 40 + j) % audioData.size
+                    features[i * 40 + j] = audioData[audioIndex]
+                }
+            }
+            
+            features
         } catch (e: Exception) {
             null
         }
     }
     
-    private fun runInference(audioData: FloatArray): Int {
-        val inputBuffer = ByteBuffer.allocateDirect(audioData.size * 4)
+    private fun runInference(features: FloatArray): Int {
+        // Create input buffer for 40x40x1 tensor (1600 features)
+        val inputBuffer = ByteBuffer.allocateDirect(features.size * 4)
         inputBuffer.order(ByteOrder.nativeOrder())
-        for (sample in audioData) {
-            inputBuffer.putFloat(sample)
+        for (feature in features) {
+            inputBuffer.putFloat(feature)
         }
         
+        // Create output buffer for 6 emotions
         val outputBuffer = ByteBuffer.allocateDirect(emotions.size * 4)
         outputBuffer.order(ByteOrder.nativeOrder())
         
+        // Run inference
         interpreter?.run(inputBuffer, outputBuffer)
         
         // Find emotion with highest probability

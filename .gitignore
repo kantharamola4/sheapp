@@ -1,15 +1,37 @@
+# Audio dataset files (too large for git)
+ravdess.zip
+ravdess_data/
+*.wav
+*.mp3
+*.3gp
+
+# Training outputs
+emotion_model.h5
+training_history.png
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Android build files
+.gradle/
+build/
+*.apk
+*.aab
+
+# IDE files
+.idea/
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+.vscode/
+
+# OS files
 .DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp

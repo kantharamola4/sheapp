@@ -169,6 +169,10 @@ def convert_to_tflite(model, output_path="emotion_model.tflite"):
     converter.optimizations = [tf.lite.Optimize.DEFAULT]
     converter.target_spec.supported_types = [tf.float16]  # Use float16 for smaller size
     
+    # Handle LSTM conversion issues
+    converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]
+    converter._experimental_lower_tensor_list_ops = False
+    
     tflite_model = converter.convert()
     
     with open(output_path, "wb") as f:
